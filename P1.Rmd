@@ -9,6 +9,7 @@ library("TSA")
 #Impor Data
 
 ```{r}
+library("readxl")
 dt <- read_xlsx("E:/Semester 5/MPDW/Jumlah Penumpang Kereta Api (1).xlsx")
 View(dt)
 str(dt)
@@ -79,6 +80,7 @@ Ide dasar dari Single Moving Average (SMA) adalah data suatu periode dipengaruhi
 Pemulusan menggunakan metode SMA dilakukan dengan fungsi \`SMA()\`. Dalam hal ini akan dilakukan pemulusan dengan parameter \`m=2\`.
 
 ```{r}
+library(TTR)
 data.sma<-SMA(train_ma.ts, n=2)
 data.sma
 ```
@@ -276,7 +278,7 @@ Pembagian data latih dan data uji dilakukan dengan perbandingan 80% data latih d
 training <- data[1:88,]
 testing <- data[89:110,]
 train.ts <- ts(training$`Jumlah Penumpang KAI Jawa`)
-test.ts <- ts(testing$`Jumlah Penumpang KAI Jawa`
+test.ts <- ts(testing$`Jumlah Penumpang KAI Jawa`)
 ```
 
 **\### DES**
@@ -295,7 +297,7 @@ plot(des.1)
 
 ```{r}
 #ramalan
-
+library(forecast)
 ramalandes1<- forecast(des.1, h=12)
 
 ramalandes1
