@@ -1,6 +1,7 @@
 ### #Praktikum 1
 
-```{library("forecast")}
+```{r}
+library("forecast")
 library("graphics")
 library("TTR")
 library("TSA")
