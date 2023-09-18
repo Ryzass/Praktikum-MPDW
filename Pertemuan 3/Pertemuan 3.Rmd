@@ -115,7 +115,7 @@ AIC(model.dlm)
 BIC(model.dlm)
 ```
 
-ari hasil tersebut terdapat beberapa peubah yang berpengaruh signifikan terhadap taraf nyata 5% yaitu intercept, $X_t$ , $X_{t-7},X_{t-10}$ \<0.05. Hal ini menunjukkan bahwa intercept $X_t$ , $X_{t-7},X_{t-10}$ \<0.05 berpengaruh signifikan terhadap y. Adapun model keseluruhan yang terbentuk adalah sebagai berikut
+Dari hasil tersebut terdapat beberapa peubah yang berpengaruh signifikan terhadap taraf nyata 5% yaitu intercept, $X_t$ , $X_{t-7},X_{t-10}$ \<0.05. Hal ini menunjukkan bahwa intercept $X_t$ , $X_{t-7},X_{t-10}$ \<0.05 berpengaruh signifikan terhadap y. Adapun model keseluruhan yang terbentuk adalah sebagai berikut
 
 $$
 \hat{Y_t} = 40.971 - 20.622X_t + 13.567X_{t-1} + 5.848X_{t-2} - 1.330X_{t-3} - 2.878X_{t-4} - 4.771X_{t-5} + 16.900X_{t-6} - 18.277X_{t-7} + 3.422X_{t-8} + 6.711X_{t-9} - 5.245X_{t-10}
