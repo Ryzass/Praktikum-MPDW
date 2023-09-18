@@ -92,7 +92,7 @@ mape.koyck.testing <- MAPE(fore.koyck$forecasts, test$Yt)
 c("MAPE Testing"=mape.koyck.testing,"MAPE Training"=mape.koyck.training)
 ```
 
-Berdasarkan akurasi di atas, terlihat bahwa nilai MAPE keduanya tidak jauh berbeda. Artinya, model regresi dengan distribusi lag ini tidak overfitted atau underfitted
+Berdasarkan akurasi di atas, terlihat bahwa nilai MAPE keduanya cukup jauh berbeda. Artinya, model regresi dengan distribusi lag ini underfitted
 
 ### Regression with Distributed Lag
 
@@ -181,7 +181,7 @@ Nilai MAPE yang didapatkan terbilang baik, yaitu sebesar 14.70%.
 GoF(model.ardl)
 ```
 
-Berdasarkan akurasi di atas, terlihat bahwa nilai MAPE keduanya tidak jauh berbeda. Artinya, model regresi dengan distribusi lag ini tidak \`overfitted\` atau \`underfitted\`
+Berdasarkan akurasi di atas, terlihat bahwa nilai MAPE keduanya cukup jauh berbeda. Artinya, model regresi dengan distribusi lag ini underfitted.
 
 ####  *Lag* Optimum
 
@@ -256,4 +256,4 @@ lines(test$Xt, fore.ardl$forecasts,col="green")
 legend("topleft",c("aktual", "koyck","DLM ", "autoregressive"), lty=1, col=c("black","red","blue","green"), cex=0.8)
 ```
 
-Berdasarkan plot tersebut, terlihat bahwa plot yang paling mendekati data aktualnya adalah Model DLM, sehingga dapat disimpulkan model terbaik dalam hal ini adalah model regresi DLM.
+Berdasarkan plot tersebut, terlihat bahwa plot yang paling mendekati data aktualnya adalah Model DLM bila dibandingkan dengan plot Autoregressive dan Koyck. Namun, bila dilihat dari nilai MAPE terkecilnya adalah model koyck sehingga dapat disimpulkan model regresi terbaiknya adalah Koyck.
