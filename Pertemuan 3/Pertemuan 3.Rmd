@@ -137,7 +137,7 @@ Nilai MAPE DLM yang didapatkan bernilai baik, yaitu sebesar 13.60%
 GoF(model.dlm)
 ```
 
-Model tersebut merupakan model yang sangat baik dengan nilai MAPE (3.66%) yang kurang dari 10%.
+Model tersebut merupakan model yang sangat baik dengan nilai MAPE data training (3.66%) yang kurang dari 10%.
 
 ### Model Autoregressive
 
