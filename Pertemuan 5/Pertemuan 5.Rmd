@@ -1,0 +1,176 @@
+---
+title: "MPDW 5"
+author: "Reyzha Siva Dewi"
+date: "2023-10-02"
+output: html_document
+---
+
+```{r}
+library(readxl)
+data <- read_excel("E:/Semester 5/MPDW/Jumlah Penumpang Kereta Api (1).xlsx")
+```
+
+```{r}
+library(ggplot2)
+library(tsibble)
+library(tseries)
+library(MASS)
+```
+
+### Data Penuh
+
+```{r}
+data.ts <- ts(data$`Jumlah Penumpang KAI Jawa`)
+dim(data.ts)
+summary(data.ts)
+```
+
+#### Plot Time Series
+
+```{r}
+ts.plot(data.ts, xlab="Time Period ", ylab="Jumlah Penumpang KAI Jawa", 
+        main = "Time Series Plot of Jumlah Penumpang KAI JAwa")
+points(data.ts)
+```
+
+Plot deret waktu di atas menunjukkan bahwa data memiliki pola tren atau tidak stasioner dalam rataan.
+
+#### Plot ACF
+
+```{r}
+acf(data.ts)
+```
+
+Berdasarkan plot ACF, data tersebut menunjukkan tails off slowly yang artinya data tidak statsioner dalam rataan.
+
+#### Uji ADF
+
+$H_0$ : Data tidak stasioner dalam rataan
+
+$H_1$ : Data stasioner dalam rataan
+
+```{r}
+tseries::adf.test(data.ts)
+```
+
+Berdasarkan Uji ADF yang telah dilakukan pada data, didapatkan nilai p-value sebesar 0.6493 sehingga terima $H_0$ artinya data tidak stasioner dalam rataan.
+
+#### Plot Box-Cox
+
+```{r}
+index <- seq(1:144)
+bc = boxcox(data.ts~index, lambda = seq(0,2,by=0.01))
+#Nilai Rounded Lambda
+lambda <- bc$x[which.max(bc$y)]
+lambda
+#SK
+bc$x[bc$y > max(bc$y) - 1/2 * qchisq(.95,1)]
+```
+
+Pada gambar terlihat bahwa nilai $\lambda$ optimum sebesar 0.98 dan pada selang kepercayaan 95%. Batas bawah selang kepercayaan berada di 0.58 dan batas atas selang kepercayaannya berada di 1.41. Namun, pada selang tersebut memuat satu maka data dapat diartikan stasioner dalam ragam.
+
+### Data Partisi 1
+
+```{r}
+dt1 <- data.ts[1:30] |> ts()
+mean(dt1)
+var(dt1)
+```
+
+#### Plot Time Series
+
+```{r}
+dt1 |> as_tsibble() |> 
+  ggplot(aes(x = index, y = value)) +
+  geom_line() + theme_bw() +
+  xlab("Obs") + ylab("Jumlah Penumpang KAI Jawa")
+```
+
+Pada plot tersebut, data cenderung terlihat stasioner dalam ragam. Hal tersebut ditandai dengan data yang fluktuatif namun tidak selalu menybar disekitar nilai rataannya, yaitu 16156.53.
+
+#### Plot ACF
+
+```{r}
+acf(dt1)
+```
+
+Plot ACF tersebut tails off dan membentuk gelombang sinus.
+
+#### Uji ADF
+
+$H_0$ : Data tidak stasioner dalam rataan
+
+$H_1$ : Data stasioner dalam rataan
+
+```{r}
+tseries::adf.test(dt1)
+```
+
+Berdasarkan Uji ADF yang telah dilakukan pada data, didapatkan nilai p-value sebesar 0.3434 sehingga terima $H_0$ artinya data tidak stasioner dalam rataan.
+
+#### Plot Box-Cox
+
+```{r}
+index <- seq(1:30)
+bc = boxcox(dt1~index, lambda = seq(-4,9,by=1))
+#Nilai Rounded Lambda
+lambda <- bc$x[which.max(bc$y)]
+lambda
+#SK
+bc$x[bc$y > max(bc$y) - 1/2 * qchisq(.95,1)]
+```
+
+Berdasarkan plot tersebut, $\lambda$ optimum sebesar 2.17 dan pada selang kepercayaan 95% yang memiliki nilai batas bawah sebesar -2.34 dan nilai batas atasnya sebesar 7.82. Selang tersebut tidak memuat nilai satu sehingga dapat dikatakan bahwa data tidak stasioner dalam ragam.
+
+### Data Partisi 2
+
+```{r}
+dt2 <- data.ts[1:100] |> ts()
+mean(dt2)
+var(dt2)
+```
+
+#### Plot Time Series
+
+```{r}
+dt2 |> as_tsibble() |> 
+  ggplot(aes(x = index, y = value)) +
+  geom_line() + theme_bw() +
+  xlab("Obs") + ylab("Jumlah Penumpang KAI Jawa")
+```
+
+Pada plot tersebut, terlihat bahawa data cendurung memiliki plot tren.
+
+#### Plot ACF
+
+```{r}
+acf(dt2)
+```
+
+Berdasarkan plot ACF, data tersebut menunjukkan tails off slowly yang artinya data tidak statsioner dalam rataan.
+
+#### Uji ADF
+
+$H_0$ : Data tidak stasioner dalam rataan
+
+$H_1$ : Data stasioner dalam rataan
+
+```{r}
+adf.test(dt2)
+```
+
+Berdasarkan Uji ADF yang telah dilakukan pada data, didapatkan nilai p-value sebesar 0.4658 sehingga terima $H_0$ artinya data tidak stasioner dalam rataan.
+
+#### Plot Box-Cox
+
+```{r}
+index <- seq(1:100)
+bc = boxcox(dt2~index, lambda = seq(-1,3,by=1))
+#Nilai Rounded Lambda
+lambda <- bc$x[which.max(bc$y)]
+lambda
+#SK
+bc$x[bc$y > max(bc$y) - 1/2 * qchisq(.95,1)]
+```
+
+Berdasarkan plot tersebut, $\lambda$ optimum sebesar 0.94 dan pada selang kepercayaan 95% yang memiliki nilai batas bawah sebesar 0.58 dan nilai batas atasnya sebesar 1.30. Selang tersebut tidak memuat nilai satu sehingga dapat dikatakan bahwa data tidak stasioner dalam ragam.
